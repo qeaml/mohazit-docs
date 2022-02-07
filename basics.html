@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohazit Language</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="content">
+        <h1>Language Basics</h1><hr/>
+
+
+
+        <h2>Statements</h2>
+        <p>A Mohazit script is made of <b>statements</b>. Every line of your script is a single statement. A statement consists of a <b>keyword</b> and some <b>arguments</b>. The keyword is always the first thing on the line, excluding spaces. Below is an example script to demostrate this. Keywords will be bolded.</p>
+<div class="codeblock"><b>say</b> hello
+<b>var</b> f = [file-open] hello.txt
+<b>data-write</b> h world
+<b>data-seek</b> 1
+<b>data-write</b> ello
+<b>data-close</b></div>
+
+
+
+        <h2>Function calls</h2>
+        <p>Most statements are simple <b>function calls</b>, which means they execute one specific action with the provided arguments. The keywords of these statements are the names of the functions to call. Function names consist of two words joined together with a dash (-). For example: file-open, data-write, random-generate etc. All function call statements receive their arguments in the same way. That is, by having a list of the inputs after the keyword. For example, if we had a function called <code>greet</code>, which accepted 2 arguments -- a string and an integer, we would call it like below.</p>
+<div class="codeblock"><b>greet</b> John 12</div>
+        <p>The two arguments will be automatically separated because they are not the same type, one is a string, and the other is an integer. Since strings are not quoted, a problem arises if a function needs two separate strings as arguments. This can be acheived using the <code>\</code> operator:</p>
+<div class="codeblock"><b>greet</b> John Doe <b>\</b> Mark Smith</div>
+
+
+
+        <h2>Variables</h2>
+        <p>Your probably most important statements are your variable-setting statements. These include: <code>local</code>, <code>global</code>, <code>var</code> and <code>set</code>. You might be wondering why are there 4 different keywords that do the same exact thing? Well, that's because they don't. <code>global</code> sets a variable that will <b>never</b> disappear, and can be used from anywhere in your script. But to understand what the difference means exactly, you'll have to understand local variables. Local variables only exist in the local context, that is -- unil the next <code>end</code> statement. After an <code>end</code> is reached, all local variables are removed. No amount of <code>end</code>s will ever affect global variables. So, what's the deal with <code>var</code> and <code>set</code>? <code>var</code> will check if a local context exists. That means: whether we're inside an <code>if</code>/<code>unless</code>/<code>label</code>... statement. If one does exist, then it sets a local variable. If it doesn't, then it sets a global variable instead. <code>set</code> is just an alias for <code>var</code> and does the same exact thing.</p>
+<div class="codeblock"><b>global</b> a = hello
+<b>var</b> b = world
+
+<b>if</b> something = something
+    <b>var</b> c = !
+    <b>say</b> {a} {b} {c}
+    <b>say</b> the above will work as expected
+<b>end</b>
+
+<b>say</b> at this point, c doesn't exist anymore</div>
+
+
+
+        <h2>Control flow</h2>
+        <p>In Mohazit you can use the <code>if</code> and <code>unless</code> statements to control whether some statements are executed or not. You can use them in conjuction with the <code>else</code> statement to "cover both sides of the coin". You then end these statements with an <code>end</code> statement.</p>
+<div class="codeblock"><b>if</b> this = that
+    <b>say</b> this will be executed if the strings `this` and `that` are equal, which is never
+<b>else</b>
+    <b>say</b> this will be executed if the strings `this` and `that` are not equal, which is always
+<b>end</b>
+
+<b>unless</b> this = that
+    <b>say</b> this will be executed if the strings `this` and `that` are not equal, which is always
+<b>else</b>
+    <b>say</b> this will be executed if the strings `this` and `that` are equal, which is never
+<b>end</b></div>
+
+
+
+        <h2>Labels</h2>
+        <p>Labels allow you to easily reuse code. The below example will use labels to insert 4 dots in the beginning of the opened file</p>
+<div class="codeblock"><b>label</b> insert-dot
+    <b>data-seek</b> 0
+    <b>data-write</b> ..
+<b>end</b>
+
+<b>var</b> f = [file-open] somefile.txt
+<b>goto</b> insert-two-dots
+<b>goto</b> insert-two-dots
+<b>data-close</b></div>
+    </div>
+</body>
+</html>
